@@ -1,0 +1,52 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[ukrainian]{babel}
+\usepackage{fontspec}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\setmainfont{Times New Roman}
+
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{1.25cm}
+
+% Можна додати пакет для кращого керування заголовками розділів, якщо потрібно
+% \usepackage{titlesec}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{\fill} % Вертикальне центрування
+
+    {\Huge\bfseries Положення}\par % Великий жирний заголовок
+    \vspace{1em} % Відступ
+    {\LARGE про органи студентського самоврядування}\par % Підзаголовок
+    \vspace{0.5em} % Менший відступ
+    {\large Державного некомерційного підприємства \\ ``Державний університет ``Київський авіаційний інститут''}\par % Повна назва
+
+    \vspace*{\fill} % Вертикальне центрування
+\end{titlepage}
+
+% --- Підключення розділів --- 
+\input{Розділ_I_Загальні_положення.tex}
+
+\input{Розділ_II_Структура_ОСС.tex}
+
+\input{Розділ_III_Конференція_студентів.tex}
+
+\input{Розділ_IV_Положення_ОСС.tex} % Розділ IV. Участь в органах студентського самоврядування
+
+\input{Розділ_V_Фінансування_та_забезпечення.tex}
+
+\input{Розділ_VI_Контроль_та_звітність.tex}
+
+\input{Розділ_VII_Взаємодія.tex}
+
+\input{Розділ_VIII_Прикінцеві_положення.tex}
+
+\end{document} 

@@ -1,0 +1,42 @@
+name: Compile LaTeX Documents and Release
+
+on:
+  push:
+    branches: [ master ]
+    tags: [ 'v*' ]
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up LaTeX environment
+        run: |
+          echo "Installing LaTeX dependencies..."
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends make latexmk texlive-luatex texlive-fonts-recommended texlive-fonts-extra texlive-lang-cyrillic texlive-latex-extra
+          echo "Updating luaotfload font cache..."
+          sudo luaotfload-tool -uf
+
+      - name: Compile LaTeX documents
+        run: |
+          echo "Running make..."
+          make
+
+      - name: Upload PDF artifacts (on push to main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-documents-${{ github.sha }}
+          path: dist/*.pdf
+          retention-days: 7
+
+      - name: Create GitHub Release (on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
