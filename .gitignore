@@ -13,3 +13,4 @@
 *.pdfsync
 *.pdfsync
 dist/
+compiled/
