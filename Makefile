@@ -14,9 +14,9 @@ SUD_DIR = Положення_про_СУД
 OSS_SRC = $(OSS_DIR)/Положення_про_ОСС.tex
 SUD_SRC = $(SUD_DIR)/Положення_про_СУД.tex
 
-# Цільові PDF файли у директорії dist
-OSS_PDF = $(DIST_DIR)/$(notdir $(OSS_SRC:.tex=.pdf))
-SUD_PDF = $(DIST_DIR)/$(notdir $(SUD_SRC:.tex=.pdf))
+# Цільові PDF файли у директорії dist (використовуємо латиницю та дефіси)
+OSS_PDF = $(DIST_DIR)/Polozhennia-pro-OSS.pdf
+SUD_PDF = $(DIST_DIR)/Polozhennia-pro-SUD.pdf
 
 # Ціль за замовчуванням: зібрати всі документи
 all: $(OSS_PDF) $(SUD_PDF)
@@ -26,14 +26,20 @@ all: $(OSS_PDF) $(SUD_PDF)
 $(OSS_PDF): $(OSS_SRC) $(wildcard $(OSS_DIR)/*.tex)
 	@echo "Compiling $(OSS_SRC) -> $(OSS_PDF)"
 	@mkdir -p $(DIST_DIR)
+	# Використовуємо jobname без пробілів для назви логів/aux, але фінальний PDF буде перейменовано
 	$(LATEXMK) -cd -output-directory=../$(DIST_DIR) -jobname=$(notdir $(OSS_SRC:.tex=)) $<
+	# Перейменовуємо PDF якщо ім'я відрізняється (команда виконується з кореневої директорії)
+	[ -f "$(DIST_DIR)/$(notdir $(OSS_SRC:.tex=.pdf))" ] && [ "$(notdir $(OSS_SRC:.tex=.pdf))" != "$(notdir $(OSS_PDF))" ] && mv "$(DIST_DIR)/$(notdir $(OSS_SRC:.tex=.pdf))" "$(DIST_DIR)/$(notdir $(OSS_PDF))" || true
 
 # Правило для компіляції Положення про СУД
 # Залежить від головного файлу та всіх .tex файлів у його директорії
 $(SUD_PDF): $(SUD_SRC) $(wildcard $(SUD_DIR)/*.tex)
 	@echo "Compiling $(SUD_SRC) -> $(SUD_PDF)"
 	@mkdir -p $(DIST_DIR)
+	# Використовуємо jobname без пробілів для назви логів/aux, але фінальний PDF буде перейменовано
 	$(LATEXMK) -cd -output-directory=../$(DIST_DIR) -jobname=$(notdir $(SUD_SRC:.tex=)) $<
+	# Перейменовуємо PDF якщо ім'я відрізняється (команда виконується з кореневої директорії)
+	[ -f "$(DIST_DIR)/$(notdir $(SUD_SRC:.tex=.pdf))" ] && [ "$(notdir $(SUD_SRC:.tex=.pdf))" != "$(notdir $(SUD_PDF))" ] && mv "$(DIST_DIR)/$(notdir $(SUD_SRC:.tex=.pdf))" "$(DIST_DIR)/$(notdir $(SUD_PDF))" || true
 
 # Ціль для очищення допоміжних файлів
 clean:
