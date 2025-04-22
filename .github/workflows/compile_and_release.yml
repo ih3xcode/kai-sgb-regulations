@@ -24,11 +24,16 @@ jobs:
       - name: Compile LaTeX documents
         run: |
           echo "Running make..."
-          make
+          make all
+
+      - name: List files in dist directory
+        run: ls -l dist
 
       - name: Modify GitHub Release (on tag)
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/*.pdf
+          files: |
+            dist/Polozhennia-pro-OSS.pdf
+            dist/Polozhennia-pro-SUD.pdf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
