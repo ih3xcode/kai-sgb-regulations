@@ -6,3 +6,9 @@
 *.bbl
 *.blg
 *.bst
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex
+*.pdfsync
+*.pdfsync
