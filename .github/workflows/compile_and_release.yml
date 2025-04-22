@@ -26,10 +26,9 @@ jobs:
           echo "Running make..."
           make
 
-      - name: Create Draft GitHub Release (on tag)
+      - name: Modify GitHub Release (on tag)
         uses: softprops/action-gh-release@v2
         with:
-          draft: true
           files: dist/*.pdf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
