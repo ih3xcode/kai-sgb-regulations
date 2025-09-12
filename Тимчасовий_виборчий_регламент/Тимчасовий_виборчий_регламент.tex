@@ -1,0 +1,73 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[ukrainian]{babel}
+\usepackage{fontspec}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+\usepackage[nottoc]{tocbibind} % Додаємо для відображення ненумерованих розділів у змісті
+\usepackage{hyperref} % Додаємо підтримку гіперпосилань
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=blue,      
+    urlcolor=blue,
+    pdftitle={Тимчасовий виборчий регламент},
+    pdfauthor={ДУ ``КАІ''},
+    pdfcreator={LaTeX},
+    pdfproducer={LaTeX}
+}
+
+\setmainfont{Liberation Serif}
+
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{1.25cm}
+
+% Метадані документа
+\title{Тимчасовий виборчий регламент}
+\author{Державний університет ``Київський авіаційний інститут''}
+\date{\today} % Поточна дата компіляції
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{\fill} % Вертикальне центрування
+
+    {\Huge\bfseries Тимчасовий виборчий регламент}\par % Великий жирний заголовок
+    \vspace{1em} % Відступ
+    {\LARGE для проведення перших виборів до органів}\par % Підзаголовок
+    {\LARGE студентського самоврядування}\par
+    \vspace{0.5em} % Менший відступ
+    {\large Державного некомерційного підприємства \\ ``Державний університет ``Київський авіаційний інститут''}\par % Повна назва
+
+    \vspace*{\fill} % Вертикальне центрування
+\end{titlepage}
+
+% Додаємо глосарій термінів та абревіатур
+\section*{Глосарій термінів та абревіатур}
+\begin{description}[leftmargin=3cm,style=nextline]
+    \item[ТВК] Тимчасова виборча комісія -- орган, створений для організації та проведення перших виборів делегатів КСУ.
+    \item[ОСС] Органи студентського самоврядування.
+    \item[КСУ] Конференція студентів Університету -- вищий представницький орган студентського самоврядування.
+    \item[ЗЗС] Загальні збори студентів -- орган, що затверджує цей Регламент та формує ТВК.
+\end{description}
+\newpage
+
+% Додаємо зміст
+\renewcommand{\contentsname}{Зміст}
+\tableofcontents
+\newpage
+
+% --- Підключення розділів ---
+\input{Розділ_I_Загальні_положення.tex}
+\input{Розділ_II_Тимчасова_виборча_комісія.tex}
+\input{Розділ_III_Процедури_перших_виборів.tex}
+\input{Розділ_IV_Особливості_різних_типів_виборів.tex}
+\input{Розділ_V_Контроль_та_оскарження.tex}
+\input{Розділ_VI_Прикінцеві_положення.tex}
+
+\end{document}
