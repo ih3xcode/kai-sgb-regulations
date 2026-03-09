@@ -14,6 +14,7 @@ SR_KAI_DIR = Положення_про_СР_КАІ
 KSU_DIR = Регламент_КСУ
 CVKS_DIR = Положення_про_ЦВКс
 SR_SM_DIR = Положення_про_СР_СМ
+TPK_DIR = Положення_про_ТПК
 TVR_DIR = Тимчасовий_виборчий_регламент
 
 # Головні .tex файли
@@ -23,6 +24,7 @@ SR_KAI_SRC = $(SR_KAI_DIR)/Положення_про_СР_КАІ.tex
 KSU_SRC = $(KSU_DIR)/Регламент_КСУ.tex
 CVKS_SRC = $(CVKS_DIR)/Положення_про_ЦВКс.tex
 SR_SM_SRC = $(SR_SM_DIR)/Положення_про_СР_СМ.tex
+TPK_SRC = $(TPK_DIR)/Положення_про_ТПК.tex
 TVR_SRC = $(TVR_DIR)/Тимчасовий_виборчий_регламент.tex
 
 # Скрипт для компіляції розділів
@@ -36,6 +38,7 @@ COMPILED_SR_KAI = $(COMPILED_DIR)/sr_kai.tex
 COMPILED_KSU = $(COMPILED_DIR)/ksu.tex
 COMPILED_CVKS = $(COMPILED_DIR)/cvks.tex
 COMPILED_SR_SM = $(COMPILED_DIR)/sr_sm.tex
+COMPILED_TPK = $(COMPILED_DIR)/tpk.tex
 COMPILED_TVR = $(COMPILED_DIR)/tvr.tex
 
 # Цільові PDF файли у директорії dist (використовуємо латиницю та дефіси)
@@ -45,10 +48,11 @@ SR_KAI_PDF = $(DIST_DIR)/Polozhennia-pro-SR-KAI.pdf
 KSU_PDF = $(DIST_DIR)/Reglament-KSU.pdf
 CVKS_PDF = $(DIST_DIR)/Polozhennia-pro-CVKS.pdf
 SR_SM_PDF = $(DIST_DIR)/Polozhennia-pro-SR-SM.pdf
+TPK_PDF = $(DIST_DIR)/Polozhennia-pro-TPK.pdf
 TVR_PDF = $(DIST_DIR)/Tymchasovyi-vyborchyi-reglament.pdf
 
 # Ціль за замовчуванням: зібрати всі документи
-all: $(OSS_PDF) $(SUD_PDF) $(SR_KAI_PDF) $(KSU_PDF) $(CVKS_PDF) $(SR_SM_PDF) $(TVR_PDF)
+all: $(OSS_PDF) $(SUD_PDF) $(SR_KAI_PDF) $(KSU_PDF) $(CVKS_PDF) $(SR_SM_PDF) $(TPK_PDF) $(TVR_PDF)
 
 # Правило для компіляції Положення про ОСС
 # Залежить від головного файлу та всіх .tex файлів у його директорії
@@ -106,6 +110,15 @@ $(SR_SM_PDF): $(SR_SM_SRC) $(wildcard $(SR_SM_DIR)/*.tex)
 	# Перейменовуємо PDF якщо ім'я відрізняється
 	[ -f "$(DIST_DIR)/$(notdir $(SR_SM_SRC:.tex=.pdf))" ] && [ "$(notdir $(SR_SM_SRC:.tex=.pdf))" != "$(notdir $(SR_SM_PDF))" ] && mv "$(DIST_DIR)/$(notdir $(SR_SM_SRC:.tex=.pdf))" "$(DIST_DIR)/$(notdir $(SR_SM_PDF))" || true
 
+# Правило для компіляції Положення про ТПК
+# Залежить від головного файлу та всіх .tex файлів у його директорії
+$(TPK_PDF): $(TPK_SRC) $(wildcard $(TPK_DIR)/*.tex)
+	@echo "Compiling $(TPK_SRC) -> $(TPK_PDF)"
+	@mkdir -p $(DIST_DIR)
+	$(LATEXMK) -cd -output-directory=../$(DIST_DIR) -jobname=$(notdir $(TPK_SRC:.tex=)) $<
+	# Перейменовуємо PDF якщо ім'я відрізняється
+	[ -f "$(DIST_DIR)/$(notdir $(TPK_SRC:.tex=.pdf))" ] && [ "$(notdir $(TPK_SRC:.tex=.pdf))" != "$(notdir $(TPK_PDF))" ] && mv "$(DIST_DIR)/$(notdir $(TPK_SRC:.tex=.pdf))" "$(DIST_DIR)/$(notdir $(TPK_PDF))" || true
+
 # Правило для компіляції Тимчасового виборчого регламенту
 # Залежить від головного файлу та всіх .tex файлів у його директорії
 $(TVR_PDF): $(TVR_SRC) $(wildcard $(TVR_DIR)/*.tex)
@@ -117,7 +130,7 @@ $(TVR_PDF): $(TVR_SRC) $(wildcard $(TVR_DIR)/*.tex)
 
 # Нове правило для компіляції розділів у окремі файли
 # Залежить від відповідних цілей для кожного документа
-compile_sections: $(COMPILED_OSS) $(COMPILED_SUD) $(COMPILED_SR_KAI) $(COMPILED_KSU) $(COMPILED_CVKS) $(COMPILED_SR_SM) $(COMPILED_TVR)
+compile_sections: $(COMPILED_OSS) $(COMPILED_SUD) $(COMPILED_SR_KAI) $(COMPILED_KSU) $(COMPILED_CVKS) $(COMPILED_SR_SM) $(COMPILED_TPK) $(COMPILED_TVR)
 
 # Правило для компіляції розділів ОСС
 # Залежить від скрипта та всіх .tex файлів у директорії ОСС
@@ -155,6 +168,12 @@ $(COMPILED_SR_SM): $(COMPILE_SCRIPT) $(wildcard $(SR_SM_DIR)/*.tex)
 	@echo "Compiling SR SM sections using $(COMPILE_SCRIPT)..."
 	$(PYTHON) $(COMPILE_SCRIPT) -s $(SR_SM_DIR) -o $@
 
+# Правило для компіляції розділів Положення про ТПК
+# Залежить від скрипта та всіх .tex файлів у директорії ТПК
+$(COMPILED_TPK): $(COMPILE_SCRIPT) $(wildcard $(TPK_DIR)/*.tex)
+	@echo "Compiling TPK sections using $(COMPILE_SCRIPT)..."
+	$(PYTHON) $(COMPILE_SCRIPT) -s $(TPK_DIR) -o $@
+
 # Правило для компіляції розділів Тимчасового виборчого регламенту
 # Залежить від скрипта та всіх .tex файлів у директорії TVR
 $(COMPILED_TVR): $(COMPILE_SCRIPT) $(wildcard $(TVR_DIR)/*.tex)
@@ -172,6 +191,7 @@ clean:
 	(cd $(KSU_DIR) && $(LATEXMK) -C -output-directory=../$(DIST_DIR) $(notdir $(KSU_SRC))) || true
 	(cd $(CVKS_DIR) && $(LATEXMK) -C -output-directory=../$(DIST_DIR) $(notdir $(CVKS_SRC))) || true
 	(cd $(SR_SM_DIR) && $(LATEXMK) -C -output-directory=../$(DIST_DIR) $(notdir $(SR_SM_SRC))) || true
+	(cd $(TPK_DIR) && $(LATEXMK) -C -output-directory=../$(DIST_DIR) $(notdir $(TPK_SRC))) || true
 	(cd $(TVR_DIR) && $(LATEXMK) -C -output-directory=../$(DIST_DIR) $(notdir $(TVR_SRC))) || true
 	# Видаляємо директорію зі скомпільованими розділами
 	@echo "Removing compiled sections directory $(COMPILED_DIR)..."
