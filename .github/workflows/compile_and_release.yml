@@ -37,6 +37,8 @@ jobs:
             dist/Polozhennia-pro-SR-KAI.pdf
             dist/Polozhennia-pro-SUD.pdf
             dist/Polozhennia-pro-CVKS.pdf
+            dist/Polozhennia-pro-SR-SM.pdf
+            dist/Polozhennia-pro-TPK.pdf
             dist/Reglament-KSU.pdf
             dist/Tymchasovyi-vyborchyi-reglament.pdf
         env:
